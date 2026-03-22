@@ -11,7 +11,7 @@ class FaceDetector:
         try:
             faces = self.detector.detect_faces(rgb)
         except Exception:
-            return []
+            faces = []
         return faces
     def drawFaces(self, frame, faces):
         for face in faces:
