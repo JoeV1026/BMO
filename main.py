@@ -6,7 +6,7 @@ from FaceEmbedder import FaceEmbedder
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-def recognize(embedding, database, threshold=0.5):
+def recognize(embedding, database, threshold=0.3):
     best_match = "Unknown"
     best_score = -1
 
@@ -17,6 +17,8 @@ def recognize(embedding, database, threshold=0.5):
             if score > best_score:
                 best_score = score
                 best_match = name
+
+    print(f"Best score: {best_score:.3f}")
 
     if best_score < threshold:
         return "Unknown"

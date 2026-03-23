@@ -1,5 +1,10 @@
+# Python
 __pycache__/
 *.pyc
+
+# Data
 *.pkl
 dataset/
+
+# Environment variables (SECRET)
 .env
