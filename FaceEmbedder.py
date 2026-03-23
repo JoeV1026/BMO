@@ -10,8 +10,9 @@ class FaceEmbedder:
 
     def preprocess(self, face):
         face = cv.resize(face, (160, 160))
+        face = cv.cvtColor(face, cv.COLOR_BGR2RGB)
         face = face.astype(np.float32) / 255.0
-        face = (face - 0.5) / 0.5   # 🔥 VERY IMPORTANT (normalization)
+        face = (face - 0.5) / 0.5
         face = np.transpose(face, (2, 0, 1))
         face = torch.tensor(face).unsqueeze(0)
         return face

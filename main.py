@@ -6,23 +6,24 @@ from FaceEmbedder import FaceEmbedder
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-def recognize(embedding, database, threshold=0.3):
+def recognize(embedding, database, threshold=0.72, min_embeddings_per_person=3):
     best_match = "Unknown"
-    best_score = -1
+    best_score = -1.0
 
     for name, embeddings in database.items():
-        for db_emb in embeddings:
-            score = cosine_similarity(embedding, db_emb)
+        if len(embeddings) < min_embeddings_per_person:
+            continue
 
-            if score > best_score:
-                best_score = score
-                best_match = name
+        person_best = max(cosine_similarity(embedding, db_emb) for db_emb in embeddings)
+
+        if person_best > best_score:
+            best_score = person_best
+            best_match = name
 
     print(f"Best score: {best_score:.3f}")
 
     if best_score < threshold:
         return "Unknown"
-
     return best_match
 
 
